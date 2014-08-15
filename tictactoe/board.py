@@ -13,6 +13,9 @@ check_if_full()
 
 check_if_win(player_num)
    returns true if player_num wins
+
+possible_plays(self, player_num)
+   returns a list of the possible plays by their board ID
 '''
 
 import numpy as np
@@ -43,6 +46,10 @@ class BOARD:
    [  ]  [  ]  [  ]
    [  ]  [  ]  [  ]
    [  ]  [  ]  [  ]
+
+   there are a total of 3**9 = 19683 possible
+   configurations. Not all of them are possible
+   obtain.
    '''
    def boardID(self):
       ID = 0;
@@ -78,6 +85,19 @@ class BOARD:
 
       return win
 
+   def possible_plays(self, player_num):
+
+      play = []
+
+      for ii in range(3):
+         for jj in range(3):
+            if self.board[ii][jj] == 0:
+               self.board[ii][jj] = player_num
+               play.append(self.boardID())
+               self.board[ii][jj] = 0
+
+      return play
+
 
 ##########################################################
 '''
@@ -93,6 +113,7 @@ print "board ID is %d" % brd.boardID()
 print "1 wins ? %r" % brd.check_if_win(1)
 
 brd.play(1,0,0)
+print "board ID is %d" % brd.boardID()
 brd.play(1,0,1)
 print "1 wins ? %r" % brd.check_if_win(1)
 brd.play(1,0,2)
@@ -100,6 +121,7 @@ brd.play(2,1,0)
 print "1 wins ? %r" % brd.check_if_win(1)
 brd.play(2,1,1)
 brd.play(2,1,2)
+print brd.possible_plays(1)
 brd.play(1,2,0)
 brd.play(1,2,1)
 brd.play(1,2,2)
