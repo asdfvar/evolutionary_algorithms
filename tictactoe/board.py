@@ -104,6 +104,7 @@ class BOARD:
 testing the board class
 '''
 
+'''
 brd = BOARD()
 brd.play(1,1,2)
 brd.play(1,0,1)
@@ -129,3 +130,4 @@ print "is full? %r" % brd.check_if_full()
 print "board ID is %d" % brd.boardID()
 
 print "1 wins ? %r" % brd.check_if_win(1)
+'''
