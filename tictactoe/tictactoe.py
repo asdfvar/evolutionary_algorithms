@@ -3,14 +3,15 @@
 import player
 import board
 import random
+import numpy as np
 
-N_players = 100
+N_players = 2
 
 players = []
 for ii in range(N_players):
    players.append(player.player())
 
-for i_game in range(20):
+for i_game in range(1):
    random.shuffle(players)
 
    # have each compete
@@ -26,14 +27,35 @@ for i_game in range(20):
       brd = board.BOARD()
 
       # start competition
-      while not(brd.check_if_full()) and \
-            not(brd.check_if_win(1)) and \
-            not(brd.check_if_win(2)):
-
-         print "hello"
+      while not(brd.full()) and \
+            not(brd.win(1)) and \
+            not(brd.win(2)):
 
          # player 1
-         if not(brd.check_if_full()):
+         if not(brd.full()) and \
+            not(brd.win(1)) and \
+            not(brd.win(2)):
+
             possible_plays = brd.possible_plays(1)
+
+            # select the best play of all the possible plays
             play = players[player1].play(possible_plays)
-            # convert the play board ID to a row and column value
+            brd.play2(play)
+
+         # player 2
+         if not(brd.full()) and \
+            not(brd.win(1)) and \
+            not(brd.win(2)):
+
+            possible_plays = brd.possible_plays(2)
+
+            # select the best play of all the possible plays
+            play = players[player2].play(possible_plays)
+            brd.play2(play)
+
+   # breed winners, kill losers
+
+print brd.full()
+print brd.win(1)
+print brd.win(2)
+print brd.board
