@@ -11,9 +11,10 @@ players = []
 for ii in range(N_players):
    players.append(player.player())
 
-for i_game in range(1):
+for i_game in range(10):
    random.shuffle(players)
 
+   print len(players)
    # have each compete
    for i_player in range(0,len(players), 2):
       player1 = i_player
@@ -53,9 +54,33 @@ for i_game in range(1):
             play = players[player2].play(possible_plays)
             brd.play2(play)
 
-   # breed winners, kill losers
+      print brd.board
+      if brd.win(1):
+         print "player 1 wins"
+         players[player1].win  = True
+         players[player2].lose = True
+      if brd.win(2):
+         print "player 2 wins"
+         players[player1].lose = True
+         players[player2].win  = True
 
-print brd.full()
-print brd.win(1)
-print brd.win(2)
-print brd.board
+   # kill losers
+   for i_player,plyr in enumerate(players):
+      if plyr.lose == True:
+         print "poping"
+         players.pop(i_player)
+
+   for i_player,plyr in enumerate(players):
+      if plyr.win == True:
+         print "appending"
+         # breed winners
+         new_player = player.player()
+
+         # for now, just get a new player
+         players.append(new_player)
+
+   # reset winners
+   for i_player,plyr in enumerate(players):
+      players[i_player].win = False
+      players[i_player].lose = False
+
