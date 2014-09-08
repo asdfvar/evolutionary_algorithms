@@ -27,8 +27,6 @@ class player:
 
 '''
 tom = player()
-'''
 
-'''
 print "play %d selection" % tom.play(np.array([4, 9, 23, 7]))
 '''

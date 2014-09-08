@@ -5,6 +5,20 @@ import board
 import random
 import numpy as np
 
+# mix weights from two players to make
+# a new set of weights.
+def mixWeights(weights1, weights2):
+   newWeights = np.zeros(len(weights1))
+   for i in range(len(weights1)):
+      ZeroOrOne = np.random.randint(0,2)
+      if ZeroOrOne == 0:
+         weight = weights1[i]
+      elif ZeroOrOne == 1:
+         weight = weights2[i]
+      newWeights[i] = weight
+   return newWeights
+   
+
 N_players = 2
 
 players = []
