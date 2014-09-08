@@ -19,7 +19,7 @@ def mixWeights(weights1, weights2):
    return newWeights
    
 
-N_players = 2
+N_players = 8
 
 players = []
 for ii in range(N_players):
@@ -79,11 +79,14 @@ for i_game in range(10):
          players[player2].win  = True
 
    # kill losers
+   NLosers = 0
    for i_player,plyr in enumerate(players):
       if plyr.lose == True:
          print "poping"
          players.pop(i_player)
+         NLosers += 1
 
+     # Need to find out how to handle making new players
    for i_player,plyr in enumerate(players):
       if plyr.win == True:
          print "appending"
