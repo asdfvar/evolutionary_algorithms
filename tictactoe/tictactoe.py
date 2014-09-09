@@ -8,6 +8,7 @@ import numpy as np
 # mix weights from two players to make
 # a new set of weights.
 def mixWeights(weights1, weights2):
+   nu = 0.0125
    newWeights = np.zeros(len(weights1))
    for i in range(len(weights1)):
       ZeroOrOne = np.random.randint(0,2)
@@ -16,6 +17,9 @@ def mixWeights(weights1, weights2):
       elif ZeroOrOne == 1:
          weight = weights2[i]
       newWeights[i] = weight
+   newWeights += np.random.randn(len(newWeights))*nu
+   newWeights -= min(newWeights)
+   newWeights /= (max(newWeights) - min(newWeights))
    return newWeights
    
 
@@ -78,23 +82,15 @@ for i_game in range(10):
          players[player1].lose = True
          players[player2].win  = True
 
-   # kill losers
-   NLosers = 0
+   # kill losers and breed winners
+   Losers = []
+   Winners = []
    for i_player,plyr in enumerate(players):
       if plyr.lose == True:
          print "poping"
-         players.pop(i_player)
-         NLosers += 1
-
-     # Need to find out how to handle making new players
-   for i_player,plyr in enumerate(players):
-      if plyr.win == True:
-         print "appending"
-         # breed winners
-         new_player = player.player()
-
-         # for now, just get a new player
-         players.append(new_player)
+         Losers.append(players.pop(i_player))
+      elif plyr.win == True:
+         Winners.append(players[i_player])
 
    # reset winners
    for i_player,plyr in enumerate(players):
