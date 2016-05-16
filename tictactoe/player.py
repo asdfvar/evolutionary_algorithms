@@ -1,5 +1,6 @@
 import math
 import board
+import numpy as np
 
 def sigmoid(arg):
    return 2.0 / (1.0 + math.exp(arg)) - 1.0
@@ -9,12 +10,13 @@ class player:
       self.weights = np.random.randn(3**9)
       self.plays = []
       self.playerNum = playerNum
-
-   def adjustWeights(self, nu):
-      self.weights += np.random.randn(3**9) * nu
+      self.score = 0
 
    def resetPlays(self):
       self.plays = []
+
+   def adjustWeights(self, nu):
+      self.weights += np.random.randn(3**9) * nu
 
    def incrementPlays(self, nu):
       self.weights[self.plays] += abs(np.random.randn(len(self.plays))) * nu
@@ -24,5 +26,7 @@ class player:
 
    def makePlay(self, Board):
       possiblePlays = Board.getPossiblePlays(self.playerNum)
-      bestPlay = self.weights[possiblePlays].argmax()
+      ind = self.weights[possiblePlays].argmax()
+      bestPlay = possiblePlays[ind]
+      self.plays.append(bestPlay)
       return bestPlay

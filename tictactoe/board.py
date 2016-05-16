@@ -23,7 +23,7 @@ class board:
       flat = self.board.flatten()
       for (k, val) in enumerate(flat):
          if val == 0:
-            temp = flat
+            temp = flat.copy()
             temp[k] = num
             ID = getId(temp)
             plays.append(ID)
@@ -34,15 +34,18 @@ class board:
       all2 = self.board == 2
       # check the rows and columns
       for ii in range(3):
-         if all1[ii][:]: return 1
-         if all2[ii][:]: return 2
-         if all1[:][ii]: return 1
-         if all2[:][ii]: return 2
+         if np.all(all1[ii,:]): return 1
+         if np.all(all2[ii,:]): return 2
+         if np.all(all1[:,ii]): return 1
+         if np.all(all2[:,ii]): return 2
       # check the diagonals
-      if all(all1.diagonal()): return 1
-      if all(all2.diagonal()): return 2
-      if all(np.fliplr(all1).diagonal()): return 1
-      if all(np.fliplr(all2).diagonal()): return 2
+      if np.all(all1.diagonal()): return 1
+      if np.all(all2.diagonal()): return 2
+      if np.all(np.fliplr(all1).diagonal()): return 1
+      if np.all(np.fliplr(all2).diagonal()): return 2
       # check if the board is full
-      if all(self.board) return -1
+      if np.all(self.board): return -1
       return 0
+
+   def reset(self):
+      self.board.fill(0)
